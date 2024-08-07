@@ -3,6 +3,8 @@ import Hero from '../../components/Hero'
 import Section from '../../components/Section'
 import Gallery from '../../Gallery'
 
+import residentEvil from '../../assets/images/resident.png'
+
 const Product = () => {
   const { id } = useParams()
   //esse método useParams nos retorna qual foi o paramêtro passado na
@@ -34,7 +36,7 @@ const Product = () => {
         </p>
       </Section>
 
-      <Gallery />
+      <Gallery name="Jogo teste" defaultCover={residentEvil} />
     </>
   )
 }
