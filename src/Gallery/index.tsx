@@ -7,11 +7,7 @@ import spiderman from '../assets/images/banner-homem-aranha.png'
 import close from '../assets/images/fechar.png'
 import { Action, Item, Itens, Modal, ModalContent } from './styles'
 import { useState } from 'react'
-
-interface GalleryItem {
-  type: 'image' | 'video'
-  url: string
-}
+import { GalleryItem } from '../pages/Home'
 
 const mock: GalleryItem[] = [
   {
