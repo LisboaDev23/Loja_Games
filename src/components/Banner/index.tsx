@@ -33,7 +33,7 @@ const Banner = () => {
         </div>
         <Botao
           type="link"
-          to="/produto"
+          to={`/product/${game.id}`}
           title="Clique aqui para aproveitar esta oferta"
         >
           Aproveitar

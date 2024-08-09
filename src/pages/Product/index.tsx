@@ -4,39 +4,48 @@ import Section from '../../components/Section'
 import Gallery from '../../Gallery'
 
 import residentEvil from '../../assets/images/resident.png'
+import { useEffect, useState } from 'react'
+import { Game } from '../Home'
 
 const Product = () => {
   const { id } = useParams()
   //esse método useParams nos retorna qual foi o paramêtro passado na
   //requisição url product/(parametro) e podemos manipular de todas as formas
+
+  const [game, setGame] = useState<Game>()
+
+  useEffect(() => {
+    fetch(`https://fake-api-tau.vercel.app/api/eplay/jogos/${id}`)
+      .then((resposta) => resposta.json())
+      .then((resposta) => setGame(resposta))
+  }, [id])
+
+  if (!game) {
+    return <h3>Carregando ...</h3>
+  }
+
   return (
     <>
-      <Hero />
+      <Hero game={game} />
       <Section title="Sobre o jogo" background="black">
-        <p>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quas nisi
-          laboriosam tempore. Est voluptates temporibus ratione consequatur
-          fugit aliquid. Ipsum rerum ab excepturi dolores autem quae, quod
-          nostrum adipisci dicta! Lorem ipsum dolor, sit amet consectetur
-          adipisicing elit. Et delectus hic fugiat, eos a iste deleniti
-          veritatis harum tempora qui possimus, perferendis veniam. Illo
-          perferendis debitis a reprehenderit ad laudantium?
-        </p>
+        <p>{game.description}</p>
       </Section>
 
       <Section title="Mais detalhes" background="gray">
         <p>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quas nisi
-          laboriosam tempore. Est voluptates temporibus ratione consequatur
-          fugit aliquid. Ipsum rerum ab excepturi dolores autem quae, quod
-          nostrum adipisci dicta! Lorem ipsum dolor, sit amet consectetur
-          adipisicing elit. Et delectus hic fugiat, eos a iste deleniti
-          veritatis harum tempora qui possimus, perferendis veniam. Illo
-          perferendis debitis a reprehenderit ad laudantium?
+          <b>Plataforma:</b> {game.details.system} <br />
+          <b>Desenvolvedor:</b> {game.details.developer} <br />
+          <b>Editora:</b> {game.details.publisher} <br />
+          <b>Idioma:</b> O jogo oferece suporte a diversos idiomas, incluindo{' '}
+          {game.details.languages.join(', ')}
         </p>
       </Section>
 
-      <Gallery name="Jogo teste" defaultCover={residentEvil} />
+      <Gallery
+        items={game.media.gallery}
+        name={game.name}
+        defaultCover={game.media.cover}
+      />
     </>
   )
 }
