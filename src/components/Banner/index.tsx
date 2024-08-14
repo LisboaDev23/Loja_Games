@@ -1,20 +1,14 @@
 import { Imagem, Precos, Titulo } from './styles'
 
-import bannerImg from '../../assets/images/banner-homem-aranha.png'
 import Tag from '../Tag'
 import Botao from '../Button'
-import { useEffect, useState } from 'react'
-import { Game } from '../../pages/Home'
 import { formataPreco } from '../ProductsList'
 
-const Banner = () => {
-  const [game, setGame] = useState<Game>()
+import { useGetFeaturedGameQuery } from '../../services/api'
 
-  useEffect(() => {
-    fetch('https://fake-api-tau.vercel.app/api/eplay/destaque')
-      .then((resposta) => resposta.json())
-      .then((resposta) => setGame(resposta))
-  }, [])
+const Banner = () => {
+  //extraindo da função da query configurada, o dado em destaque vira como data, e se estiver carregando, saberemos a partir do isLoading
+  const { data: game, isLoading } = useGetFeaturedGameQuery()
 
   if (!game) {
     return <h3>Carregando ...</h3>
