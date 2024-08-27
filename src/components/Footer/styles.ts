@@ -6,6 +6,7 @@ export const Container = styled.footer`
   background-color: ${Cores.cinza};
   padding: 32px 0;
   font-size: 14px;
+  margin-top: 40px;
 `
 
 export const SectionTitle = styled.h4`
@@ -18,7 +19,8 @@ export const Links = styled.ul`
   display: flex;
   margin-top: 16px;
 `
-
+// precisamos desse pacote do Hash link para trabalharmos com ancoras para fazer a navegação
+//entre as páginas através do click no link que nos leve diretamente a seção
 export const Link = styled(HashLink)`
   color: ${Cores.cinzaClaro};
   text-decoration: none;
