@@ -1,11 +1,13 @@
 import { useDispatch } from 'react-redux'
-import { Game } from '../../pages/Home'
-import Botao from '../Button'
-import { formataPreco } from '../ProductsList'
+
+import Button from '../Button'
 import Tag from '../Tag'
-import { Banner, Infos } from './styles'
+import { Game } from '../../pages/Home'
 
 import { add, open } from '../../store/reducers/cart'
+
+import * as S from './styles'
+import { parseToBrl } from '../../utils'
 
 type Props = {
   game: Game
@@ -20,35 +22,33 @@ const Hero = ({ game }: Props) => {
   }
 
   return (
-    <Banner style={{ backgroundImage: `url(${game.media.cover})` }}>
+    <S.Banner style={{ backgroundImage: `url(${game.media.cover})` }}>
       <div className="container">
         <div>
           <Tag>{game.details.category}</Tag>
           <Tag>{game.details.system}</Tag>
         </div>
-        <Infos>
+        <S.Infos>
           <h2>{game.name}</h2>
           <p>
             {game.prices.discount && (
-              <span>De {formataPreco(game.prices.old)}</span>
+              <span>De {parseToBrl(game.prices.old)}</span>
             )}
-            {game.prices.current && (
-              <>Por {formataPreco(game.prices.current)}</>
-            )}
-            {game.prices.current && (
-              <Botao
-                onClick={addToCart}
-                type="button"
-                title="Clique aqui para adicionar este jogo ao carrinho"
-                variant="primary"
-              >
-                Adicionar ao carrinho
-              </Botao>
-            )}
+            {game.prices.current && <>Por {parseToBrl(game.prices.current)}</>}
           </p>
-        </Infos>
+          {game.prices.current && (
+            <Button
+              onClick={addToCart}
+              type="button"
+              title="Clique aqui para adicionar este jogo ao carrinho"
+              variant="primary"
+            >
+              Adicionar ao carrinho
+            </Button>
+          )}
+        </S.Infos>
       </div>
-    </Banner>
+    </S.Banner>
   )
 }
 

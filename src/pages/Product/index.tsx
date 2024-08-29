@@ -1,19 +1,24 @@
 import { useParams } from 'react-router-dom'
+
+import Loader from '../../components/Loader'
 import Hero from '../../components/Hero'
 import Section from '../../components/Section'
 import Gallery from '../../components/Gallery'
 
 import { useGetGameQuery } from '../../services/api'
 
+type GameParams = {
+  id: string
+}
 const Product = () => {
-  const { id } = useParams()
+  const { id } = useParams() as GameParams
   //esse método useParams nos retorna qual foi o paramêtro passado na
   //requisição url product/(parametro) e podemos manipular de todas as formas
 
-  const { data: game } = useGetGameQuery(id!)
+  const { data: game } = useGetGameQuery(id)
 
   if (!game) {
-    return <h3>Carregando ...</h3>
+    return <Loader />
   }
 
   return (

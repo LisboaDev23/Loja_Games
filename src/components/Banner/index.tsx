@@ -1,39 +1,40 @@
-import { Imagem, Precos, Titulo } from './styles'
-
-import Tag from '../Tag'
-import Botao from '../Button'
-import { formataPreco } from '../ProductsList'
-
 import { useGetFeaturedGameQuery } from '../../services/api'
+
+import Loader from '../Loader'
+import Tag from '../Tag'
+import Button from '../Button'
+
+import * as S from './styles'
+import { parseToBrl } from '../../utils'
 
 const Banner = () => {
   //extraindo da função da query configurada, o dado em destaque vira como data, e se estiver carregando, saberemos a partir do isLoading
-  const { data: game, isLoading } = useGetFeaturedGameQuery()
+  const { data: game } = useGetFeaturedGameQuery()
 
   if (!game) {
-    return <h3>Carregando ...</h3>
+    return <Loader />
   }
 
   return (
-    <Imagem style={{ backgroundImage: `url(${game?.media.cover})` }}>
+    <S.Image style={{ backgroundImage: `url(${game?.media.cover})` }}>
       <div className="container">
         <Tag size="big">Destaque do Dia</Tag>
         <div>
-          <Titulo>{game.name}</Titulo>
-          <Precos>
-            De <span>{formataPreco(game.prices.old)}</span> <br />
-            por apenas {formataPreco(game.prices.current)}
-          </Precos>
+          <S.Tittle>{game.name}</S.Tittle>
+          <S.Prices>
+            De <span>{parseToBrl(game.prices.old)}</span> <br />
+            por apenas {parseToBrl(game.prices.current)}
+          </S.Prices>
         </div>
-        <Botao
+        <Button
           type="link"
           to={`/product/${game.id}`}
           title="Clique aqui para aproveitar esta oferta"
         >
           Aproveitar
-        </Botao>
+        </Button>
       </div>
-    </Imagem>
+    </S.Image>
   )
 }
 

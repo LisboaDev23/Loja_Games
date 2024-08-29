@@ -1,6 +1,41 @@
 //precisamos fazer algumas requisições com o rtk query, precisamos importar algumas funções
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+
 import { Game } from '../pages/Home'
+
+type Product = {
+  id: number
+  price: number
+}
+
+type PurchasePayload = {
+  products: Product[]
+  billing: {
+    name: string
+    email: string
+    document: string
+  }
+  delivery: {
+    email: string
+  }
+  payment: {
+    card: {
+      active: boolean
+      owner?: {
+        name: string
+        document: string
+      }
+      name?: string
+      number?: string
+      expires?: {
+        month: number
+        year: number
+      }
+      code?: number
+    }
+    installments: number
+  }
+}
 
 const api = createApi({
   //configurações de onde vamos pegar os dados, passamos o endereço do servidor
@@ -40,6 +75,13 @@ const api = createApi({
     //precisaremos do seu id, logo a query precisará de uma string que é o id que será enviado no parâmetro
     getGame: builder.query<Game, string>({
       query: (id) => `jogos/${id}`
+    }),
+    purchase: builder.mutation<any, PurchasePayload>({
+      query: (body) => ({
+        url: 'checkout',
+        method: 'POST',
+        body
+      })
     })
   })
 })
@@ -54,7 +96,8 @@ export const {
   useGetRpgGamesQuery,
   useGetSimulationGamesQuery,
   useGetSportGamesQuery,
-  useGetGameQuery
+  useGetGameQuery,
+  usePurchaseMutation
 } = api
 
 export default api
