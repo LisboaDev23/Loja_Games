@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { Game } from '../../pages/Home'
-
 type CartState = {
   //estado criado para conseguir typar o array para um array de Game
   items: Game[]
@@ -36,10 +34,13 @@ export const cartSlice = createSlice({
     },
     close: (state) => {
       state.isOpen = false
+    },
+    clear: (state) => {
+      state.items = []
     }
   }
 })
 
 //exportando os nossas actions
-export const { add, open, close, remove } = cartSlice.actions
+export const { add, open, close, remove, clear } = cartSlice.actions
 export default cartSlice.reducer

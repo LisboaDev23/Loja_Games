@@ -1,7 +1,5 @@
 import ProductsList from '../../components/ProductsList'
 
-import { Game } from '../Home'
-
 import {
   useGetActionGamesQuery,
   useGetFightGamesQuery,
