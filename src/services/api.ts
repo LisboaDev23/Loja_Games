@@ -43,7 +43,7 @@ const api = createApi({
   //configurações de onde vamos pegar os dados, passamos o endereço do servidor
   baseQuery: fetchBaseQuery({
     //passando primeiramente o nosso endereço
-    baseUrl: 'https://fake-api-tau.vercel.app/api/eplay'
+    baseUrl: 'https://api-ebac.vercel.app/api/eplay'
   }),
   //em cima do endereço passado, vamos construir as nossas chamadas
   endpoints: (builder) => ({
